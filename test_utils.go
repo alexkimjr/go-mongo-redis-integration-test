@@ -34,7 +34,7 @@ func testServer(srv *httptest.Server, t *testing.T) {
 	t.Log(b)
 	assert.Equal(t, http.StatusInternalServerError, code)
 
-	key, code, _ := getTestResponse("GET", srv.URL+"/create?url=https://packagemain.tech")
+	key, code, _ := getTestResponse("GET", srv.URL+"/create?url=https://www.leetcode.com")
 	assert.Equal(t, http.StatusCreated, code)
 	assert.Len(t, key, keyLength)
 	t.Log("ak:key created")
@@ -51,7 +51,7 @@ func testServer(srv *httptest.Server, t *testing.T) {
 	
 	url, code, _ := getTestResponse("GET", srv.URL+"/get?key="+key)
 	assert.Equal(t, http.StatusOK, code)
-	assert.Equal(t, "https://packagemain.tech", url)
+	assert.Equal(t, "https://www.leetcode.com", url)
 	t.Log(url)
 	t.Log("ak:end of testServer")
 }
