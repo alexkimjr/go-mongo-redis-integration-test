@@ -29,17 +29,29 @@ func getTestResponse(method string, url string) (string, int, error) {
 }
 
 func testServer(srv *httptest.Server, t *testing.T) {
-	_, code, _ := getTestResponse("GET", srv.URL+"/create?url=invalidurl")
+	b, code, _ := getTestResponse("GET", srv.URL+"/create?url=invalidurl")
+	t.Log("ak:invalid url")
+	t.Log(b)
 	assert.Equal(t, http.StatusInternalServerError, code)
 
 	key, code, _ := getTestResponse("GET", srv.URL+"/create?url=https://packagemain.tech")
 	assert.Equal(t, http.StatusCreated, code)
 	assert.Len(t, key, keyLength)
+	t.Log("ak:key created")
+	t.Log(key)
 
-	_, code, _ = getTestResponse("GET", srv.URL+"/get?key=invalidkey")
-	assert.Equal(t, http.StatusNotFound, code)
+	b, code, _ = getTestResponse("GET", srv.URL+"/get?key=invalidkey")
+	assert.Equal(t, http.StatusNotFound, code)	
+	t.Log("ak:invalid key")
+	t.Log(b)
 
+	t.Log("ak:url retrieval by key")
+	
+
+	
 	url, code, _ := getTestResponse("GET", srv.URL+"/get?key="+key)
 	assert.Equal(t, http.StatusOK, code)
 	assert.Equal(t, "https://packagemain.tech", url)
+	t.Log(url)
+	t.Log("ak:end of testServer")
 }
