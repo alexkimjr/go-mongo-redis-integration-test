@@ -9,7 +9,9 @@ import (
 
 	"github.com/stretchr/testify/assert"
 )
-
+func TestPrintSomething(t *testing.T) {    
+    t.Log("hey yo!")
+}
 func TestServerWithRealDependencies(t *testing.T) {
 	s, err := NewServer(&MongoDB{}, &Redis{})
 	assert.NoError(t, err)
